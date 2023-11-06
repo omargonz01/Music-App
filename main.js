@@ -1,6 +1,4 @@
-// spotify API creds
-const clientId = 'e6a985eb413f4895a445dd9a39a581d1'
-const clientSecret = '55bfc7bc7f6949e7ba93a0da03400090'
+
 
 // getToken function
 const getToken = async () => {
