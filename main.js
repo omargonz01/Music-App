@@ -1,4 +1,6 @@
-
+// spotify API creds
+const clientId = 'e6a985eb413f4895a445dd9a39a581d1'
+const clientSecret = '55bfc7bc7f6949e7ba93a0da03400090'
 
 // getToken function
 const getToken = async () => {
@@ -29,12 +31,12 @@ const getSong = async (track, artist) => {
     })
     const data = await response.json()
     const songsArr = data.tracks.items
-    for(let song of songsArr) {
-        if(song.artists[0].name === artist) {
-            return song.preview_url
-        }
-    }
+    const songUrls = songsArr
+        .filter(song => song.artists[0].name === artist)
+        .map(song => song.preview_url);
+    return songUrls;
 }
+
 
 // verify that we get the song data
 
@@ -46,10 +48,11 @@ const allArtists = document.querySelectorAll('.artist-text')
 const clickedSong = async (divId) => {
     const track = allTracks[divId.slice(-1)].innerText
     const artist = allArtists[divId.slice(-1)].innerText
-    const songUrl = await getSong(track, artist)
-    return playSong(songUrl)
-
+    const songUrls = await getSong(track, artist)
+    // This will play the first song in the array
+    return playSong(songUrls[0])
 }
+
 
 // handles playing the audio
 let audio;
