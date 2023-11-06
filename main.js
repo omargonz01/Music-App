@@ -1,5 +1,4 @@
 
-
 // getToken function
 const getToken = async () => {
     const response = await fetch ('https://accounts.spotify.com/api/token',{
@@ -15,10 +14,6 @@ const getToken = async () => {
     return token
 }
 
-// verify that we get our token
-// getToken()
-
-// use getToken function, to get a song
 // getSong Function
 const getSong = async (track, artist) => {
     const token = await getToken()
@@ -35,9 +30,6 @@ const getSong = async (track, artist) => {
     return songUrls;
 }
 
-
-// verify that we get the song data
-
 //  cashing the dom for each song div
 const allTracks = document.querySelectorAll('.title-text')
 const allArtists = document.querySelectorAll('.artist-text')
@@ -51,18 +43,15 @@ const clickedSong = async (divId) => {
     return playSong(songUrls[0])
 }
 
-
 // handles playing the audio
-let audio;
-const playSong = (url) => {
-    if (audio){
-        audio.pause()
-        audio = ''
-    }
-    audio = new Audio(url)
-    audio.play()
-}
+let audio = new Audio();
 
+const playSong = (url) => {
+    if (audio.src !== url) {
+        audio.src = url;
+    }
+    audio.play();
+}
 
 // handles pausing the audio
 const stopBtn = document.querySelector('#stopBtn')
@@ -71,3 +60,48 @@ stopBtn.addEventListener('click', () => {
     audio.pause()
     }
 })
+
+// New functions
+
+const togglePlayPause = () => {
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
+
+
+let currentSongIndex = 0;
+let songs = []; 
+// need to populate this array with song URLs
+
+const skipToNextSong = () => {
+    // Assuming 'songs' is an array of song URLs
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    audio.src = songs[currentSongIndex];
+    audio.play();
+}
+
+
+const skipToPreviousSong = () => {
+    // Assuming 'songs' is an array of song URLs
+    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    audio.src = songs[currentSongIndex];
+    audio.play();
+}
+
+
+const changeVolume = (volume) => {
+    // 'volume' should be a value between 0 and 1
+    audio.volume = volume;
+}
+
+
+const seekToTime = (time) => {
+    // 'time' is the time in seconds to seek to
+    audio.currentTime = time;
+}
+
+
+audio.addEventListener('ended', skipToNextSong);
