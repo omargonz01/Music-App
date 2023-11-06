@@ -61,7 +61,7 @@ stopBtn.addEventListener('click', () => {
     }
 })
 
-// New functions
+// additional functionality will need to be changed on ui side to display correctly
 
 const togglePlayPause = () => {
     if (audio.paused) {
