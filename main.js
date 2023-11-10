@@ -1,4 +1,5 @@
 
+
 // getToken function
 const getToken = async () => {
     const response = await fetch ('https://accounts.spotify.com/api/token',{
