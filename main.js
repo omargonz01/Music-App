@@ -40,9 +40,15 @@ const clickedSong = async (divId) => {
     const track = allTracks[divId.slice(-1)].innerText
     const artist = allArtists[divId.slice(-1)].innerText
     const songUrls = await getSong(track, artist)
+    // Add the song URL to the songs array
+    songs.push(songUrls[0]);
+    // Update the current song index to the last song in the array
+    currentSongIndex = songs.length - 1;
     // This will play the first song in the array
     return playSong(songUrls[0])
 }
+
+
 
 // handles playing the audio
 let audio = new Audio();
@@ -52,7 +58,11 @@ const playSong = (url) => {
         audio.src = url;
     }
     audio.play();
+    document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
 }
+
+audio.addEventListener('pause', () => {document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i>';
+});
 
 // handles pausing the audio
 const stopBtn = document.querySelector('#stopBtn')
@@ -67,8 +77,10 @@ stopBtn.addEventListener('click', () => {
 const togglePlayPause = () => {
     if (audio.paused) {
         audio.play();
+        document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i>';
     } else {
         audio.pause();
+        document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i>';
     }
 }
 
