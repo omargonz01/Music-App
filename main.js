@@ -1,5 +1,4 @@
 
-
 // getToken function
 const getToken = async () => {
   const response = await fetch("https://accounts.spotify.com/api/token", {
@@ -136,3 +135,11 @@ const searchSong = async (query) => {
   const songUrls = songsArr.map((song) => song.preview_url);
   return songUrls;
 };
+
+// submitSearch function
+const submitSearch = async () => {
+    const query = document.getElementById('searchBar').value
+    const songUrls = await searchSong(query)
+    // Do something with songUrls, e.g. add them to the songs array
+    songs.push(...songUrls);
+}
