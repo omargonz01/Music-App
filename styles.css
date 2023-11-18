@@ -120,3 +120,6 @@ footer nav {
         font-size: .9rem;
     }
 }
+.searchbar {
+    margin: 20px; /* Adjust the value as needed */
+  }

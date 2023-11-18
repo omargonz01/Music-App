@@ -1,4 +1,5 @@
 
+
 // getToken function
 const getToken = async () => {
   const response = await fetch("https://accounts.spotify.com/api/token", {
@@ -143,3 +144,46 @@ const submitSearch = async () => {
     // Do something with songUrls, e.g. add them to the songs array
     songs.push(...songUrls);
 }
+// additional code for visualizer testing
+
+// Create a canvas for the visualizer
+const canvas = document.createElement('canvas');
+canvas.width = window.innerWidth;
+canvas.height = 100;
+document.body.appendChild(canvas);
+const ctx = canvas.getContext('2d');
+
+// Function to visualize the audio 
+const visualize = () => {
+  const bufferLength = analyserNode.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+  analyserNode.getByteFrequencyData(dataArray);
+
+  // Clear the canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Visualize the audio frequency
+  const barWidth = (canvas.width / bufferLength) * 2.5;
+  let x = 0;
+  for (let i = 0; i < bufferLength; i++) {
+    const barHeight = dataArray[i] / 2;
+    ctx.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+    ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight);
+    x += barWidth + 1;
+  }
+
+  requestAnimationFrame(visualize);
+};
+
+// Connect the visualizer to the audio
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const audioElement = new Audio();
+const source = audioCtx.createMediaElementSource(audioElement);
+const analyserNode = audioCtx.createAnalyser();
+source.connect(analyserNode);
+analyserNode.connect(audioCtx.destination);
+
+// Call the visualize function when the song starts playing
+audioElement.addEventListener('play', () => {
+  visualize();
+});
