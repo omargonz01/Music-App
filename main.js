@@ -1,5 +1,4 @@
 
-
 // getToken function
 const getToken = async () => {
   const response = await fetch("https://accounts.spotify.com/api/token", {
@@ -54,13 +53,14 @@ const clickedSong = async (divId) => {
 // handles playing the audio
 let audio = new Audio();
 
-const playSong = (url) => {
+const playSong = (url, title) => {
   if (audio.src !== url) {
     audio.src = url;
   }
   audio.play();
   document.getElementById("playPauseBtn").innerHTML =
     '<i class="fas fa-pause"></i>';
+    document.getElementById("songTitle").innerText = title;
 };
 
 audio.addEventListener("pause", () => {
