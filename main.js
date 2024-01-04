@@ -1,3 +1,7 @@
+// spotify API creds
+// const clientId = 
+// const clientSecret = 
+
 // Constants
 const audio = new Audio();
 const playPauseBtn = document.getElementById("playPauseBtn");
