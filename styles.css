@@ -12,7 +12,7 @@ body {
 }
 
 .bg-dark {
-    background-color: #282d31!important;
+    background-color: #282d31;
 }
 
 .fa-apple {
@@ -80,7 +80,6 @@ img:focus {
 
 button {
     cursor: pointer;
-    background-color: #000000;
     color: black;
     padding: 0;
     border: none;
